@@ -1,0 +1,25 @@
+{
+  "name": "overstock-node",
+  "version": "1.0.0",
+  "description": "Rewrite just to check out latest Express and Node",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node --watch --env-file=.env index.js",
+    "dev": "nodemon index.js --require dotenv/config"
+  },
+  "repository": {
+    "type": "git",
+    "url": "overstock-node"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Sam Filip",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "undici": "^7.5.0"
+  }
+}
