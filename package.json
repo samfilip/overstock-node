@@ -6,8 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "node --watch --env-file=.env index.js",
-    "dev": "nodemon index.js --require dotenv/config"
+    "start": "node --watch --env-file=.env index.js"
   },
   "repository": {
     "type": "git",

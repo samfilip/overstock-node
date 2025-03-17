@@ -8,7 +8,14 @@ export function reverbRouter() {
   const router = express.Router()
 
   router.get('/payouts', async (req, res) => {
-    const quarterInfo = helpers.getDateForCurrentQuarter()
+    const { created_start_date, created_end_date } = req.query
+
+    let dateQuery
+    if (created_start_date && created_end_date) {
+      dateQuery = `created_start_date=${created_start_date}&created_end_date=${created_end_date}&per_page=100`
+    } else {
+      dateQuery = helpers.getDateForCurrentQuarter()
+    }
 
     const { statusCode, headers, body } = await request(`https://api.reverb.com/api/my/payouts?${quarterInfo.queryParams}`, {
       method: 'GET',
