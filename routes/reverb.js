@@ -17,7 +17,7 @@ export function reverbRouter() {
       dateQuery = helpers.getDateForCurrentQuarter()
     }
 
-    const { statusCode, headers, body } = await request(`https://api.reverb.com/api/my/payouts?${quarterInfo.queryParams}`, {
+    const { statusCode, headers, body } = await request(`https://api.reverb.com/api/my/payouts?${dateQuery.queryParams}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${process.env.REVERB_API_KEY}`,
@@ -43,11 +43,13 @@ export function reverbRouter() {
     }
 
     const payoutsData = await body.json();
+    const payoutTotals = helpers.calculateTotals(payoutsData.payouts)
 
     return res.status(statusCode).json({
       success: true,
-      data: payoutsData,
-      dateRange: quarterInfo
+      dollarAmount: payoutTotals,
+      dateRange: dateQuery,
+      data: payoutsData
     })
   })
 

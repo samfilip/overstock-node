@@ -23,8 +23,8 @@ const helpers = {
       quarterEndDate = new Date(currentYear, 11, 31, 23, 59, 59) // Dec 31 23:59:59
     }
 
-    const startDateString = formatDate(quarterStartDate)
-    const endDateString = formatDate(quarterEndDate)
+    const startDateString = helpers.formatDate(quarterStartDate)
+    const endDateString = helpers.formatDate(quarterEndDate)
 
     return {
       startDate: startDateString,
@@ -46,6 +46,14 @@ const helpers = {
     const minutes = String(date.getMinutes()).padStart(2, '0')
     
     return `${year}-${month}-${day}T${hours}:${minutes}-00:00`
+  },
+
+  calculateTotals: (payouts) => {
+   const total = payouts.reduce((acc, payout) => {
+      return acc + Number(payout.total.amount)
+    }, 0);
+
+    return "$" + total.toFixed(2);
   }
 }
 
