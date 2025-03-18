@@ -7,20 +7,20 @@ const helpers = {
 
     if (currentMonth <= 2) {
       // Q1: Jan-Mar
-      quarterStartDate = new Date(currentYear, 0, 1) // Jan 1
-      quarterEndDate = new Date(currentYear, 2, 31, 23, 59, 59) // Mar 31 23:59:59
+      quarterStartDate = new Date(currentYear, 0, 1)
+      quarterEndDate = new Date(currentYear, 2, 31, 23, 59, 59)
     } else if (currentMonth <= 5) {
       // Q2: Apr-Jun
-      quarterStartDate = new Date(currentYear, 3, 1) // Apr 1
-      quarterEndDate = new Date(currentYear, 5, 30, 23, 59, 59) // Jun 30 23:59:59
+      quarterStartDate = new Date(currentYear, 3, 1)
+      quarterEndDate = new Date(currentYear, 5, 30, 23, 59, 59)
     } else if (currentMonth <= 8) {
       // Q3: Jul-Sep
-      quarterStartDate = new Date(currentYear, 6, 1) // Jul 1
-      quarterEndDate = new Date(currentYear, 8, 30, 23, 59, 59) // Sep 30 23:59:59
+      quarterStartDate = new Date(currentYear, 6, 1)
+      quarterEndDate = new Date(currentYear, 8, 30, 23, 59, 59)
     } else {
       // Q4: Oct-Dec
-      quarterStartDate = new Date(currentYear, 9, 1) // Oct 1
-      quarterEndDate = new Date(currentYear, 11, 31, 23, 59, 59) // Dec 31 23:59:59
+      quarterStartDate = new Date(currentYear, 9, 1)
+      quarterEndDate = new Date(currentYear, 11, 31, 23, 59, 59)
     }
 
     const startDateString = helpers.formatDate(quarterStartDate)

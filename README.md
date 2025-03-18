@@ -1,6 +1,6 @@
 # Reverb API Wrapper
 
-A simple Express.js router for interacting with the Reverb.com API, focusing on payouts data.
+A simple Express.js router for interacting with the [Reverb.com API](https://www.reverb-api.com/), focusing on payouts data.
 
 ## Overview
 
