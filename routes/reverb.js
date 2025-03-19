@@ -1,59 +1,22 @@
-import express from 'express'
-import { request } from 'undici'
-import helpers from '../helpers/index.js'
+import express from 'express';
+import { getPayouts } from '../controllers/payoutsController.js';
+import { verifyReverbToken, errorHandler, validateDateParams } from '../middleware/index.js';
 
 
 
 export function reverbRouter() {
-  const router = express.Router()
+  const router = express.Router();
 
-  router.get('/payouts', async (req, res) => {
-    const { created_start_date, created_end_date } = req.query
-
-    let dateQuery
-    if (created_start_date && created_end_date) {
-      dateQuery = `created_start_date=${created_start_date}&created_end_date=${created_end_date}&per_page=100`
-    } else {
-      dateQuery = helpers.getDateForCurrentQuarter()
-    }
-
-    const { statusCode, headers, body } = await request(`https://api.reverb.com/api/my/payouts?${dateQuery.queryParams}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${process.env.REVERB_API_KEY}`,
-        'Content-Type': 'application/hal+json',
-        'Accept': 'application/hal+json',
-        'Accept-Version': '3.0'
-      }
-    });
-
-    if (statusCode !== 200) {
-      let errorData = null;
-      try {
-        errorData = await body.json();
-      } catch (e) {
-        console.log("Request failed with:", e.message);
-      }
-    
-      return res.status(statusCode).json({
-        success: false,
-        message: 'Error fetching data from Reverb Api',
-        error: errorData || 'Request Failed'
-      });
-    }
-
-    const payoutsData = await body.json();
-    const payoutTotals = helpers.calculateTotals(payoutsData.payouts)
-
-    return res.status(statusCode).json({
-      success: true,
-      dollarAmount: payoutTotals,
-      dateRange: dateQuery,
-      data: payoutsData
-    })
-  })
-
-  return router
+  router.use(verifyReverbToken);
+  router.use(errorHandler);
+  
+  // Set up routes
+  router.get('/payouts', validateDateParams, getPayouts);
+  
+  // router.get('/listings', getListings);
+  // router.get('/orders', getOrders);
+  
+  return router;
 }
 
 export default reverbRouter
