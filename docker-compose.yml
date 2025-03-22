@@ -1,0 +1,18 @@
+ services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - REVERB_API_KEY=${REVERB_API_KEY}
+      - EBAY_CLIENT_ID=${EBAY_CLIENT_ID}
+      - EBAY_CLIENT_SECRET=${EBAY_CLIENT_SECRET}
+    restart: unless-stopped
+    volumes:
+      # Mount the entire directory for development
+      - .:/usr/src/app
+      # Exclude node_modules to use the container's installed modules
+      - /usr/src/app/node_modules
