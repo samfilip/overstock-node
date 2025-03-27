@@ -17,7 +17,6 @@ app.use(express.json());
 
 app.use('/api', reverbRouter());
 
-// Error handler
 const errorHandler: ErrorRequestHandler = (err: ApiError, req: Request, res: Response, next: NextFunction) => {
   console.error(err);
   res.status(err.statusCode || 500).json({

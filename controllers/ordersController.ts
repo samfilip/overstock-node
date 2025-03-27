@@ -11,21 +11,20 @@ interface DateRange {
 
 export async function getOrders(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    // Extract parameters from the request
+
     const { 
       start_date, 
       end_date, 
-      date_type = 'updated', // Default to 'updated'
+      date_type = 'updated',
       per_page = 100, 
       page = 1 
     } = req.query as unknown as ApiQueryParams;
     
-    // Get date range either from query or default to current quarter
+
     const dateInfo: DateRange = start_date && end_date 
     ? { start_date, end_date } 
     : getDateForCurrentQuarter();
   
-  // Build query parameters for Reverb API
   const queryParams = new URLSearchParams({
     [`${date_type}_start_date`]: dateInfo.start_date,
     [`${date_type}_end_date`]: dateInfo.end_date,
@@ -33,7 +32,6 @@ export async function getOrders(req: Request, res: Response, next: NextFunction)
     page: String(page)
   }).toString();
     
-    // Make API request
     const { statusCode, body } = await request(`https://api.reverb.com/api/my/orders/selling/all?${queryParams}`, {
       method: 'GET',
       headers: {
@@ -53,7 +51,6 @@ export async function getOrders(req: Request, res: Response, next: NextFunction)
       };
     }
     
-    // Parse response data
     const ordersData: ReverbOrdersResponse = await body.json() as ReverbOrdersResponse;
     
     res.status(200).json({

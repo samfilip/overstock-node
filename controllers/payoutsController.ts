@@ -6,29 +6,27 @@ import { ApiQueryParams } from '../types/reverb/index.ts';
 
 export async function getPayouts(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    // Extract parameters from the request
+    
     const { 
       start_date, 
       end_date, 
-      date_type = 'created', // Default to 'created' for payouts
+      date_type = 'created',
       per_page = 100, 
       page = 1 
     } = req.query as ApiQueryParams;
     
-    // Get date range either from query or default to current quarter
+
     const dateInfo = start_date && end_date 
       ? { start_date, end_date } 
       : getDateForCurrentQuarter();
     
-    // Build query parameters for Reverb API
     const queryParams = new URLSearchParams({
       [`${date_type}_start_date`]: dateInfo.start_date,
       [`${date_type}_end_date`]: dateInfo.end_date,
       per_page: String(per_page),
       page: String(page)
     }).toString();
-    
-    // Make API request
+
     const { statusCode, body } = await request(`https://api.reverb.com/api/my/payouts?${queryParams}`, {
       method: 'GET',
       headers: {
@@ -48,7 +46,6 @@ export async function getPayouts(req: Request, res: Response, next: NextFunction
       };
     }
     
-    // Parse response data
     const payoutsData = await body.json() as ReverbPayoutsResponse;
     const payoutTotals = calculateTotals(payoutsData.payouts);
     

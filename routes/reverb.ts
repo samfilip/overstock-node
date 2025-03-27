@@ -10,8 +10,7 @@ export function reverbRouter() {
 
   router.use(verifyReverbToken);
   router.use(errorHandler);
-  
-  // Set up routes
+
   router.get('/payouts', validateDateParams, getPayouts);
   
   // router.get('/listings', getListings);

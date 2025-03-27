@@ -1,4 +1,3 @@
-// Define types for date-related functions
 interface DateRange {
   start_date: string;
   end_date: string;
