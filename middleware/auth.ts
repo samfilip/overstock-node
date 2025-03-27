@@ -1,6 +1,8 @@
-export const verifyReverbToken = (req, res, next) => {
+import { Request, Response, NextFunction } from 'express';
+
+export const verifyReverbToken = (req: Request, res: Response, next: NextFunction): void => {
   if (!process.env.REVERB_API_KEY) {
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       message: 'Reverb API key not configured'
     });
