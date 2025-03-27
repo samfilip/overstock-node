@@ -1,4 +1,15 @@
-export function formatDate(date) {
+// Define types for date-related functions
+interface DateRange {
+  start_date: string;
+  end_date: string;
+}
+
+/**
+ * Formats a date into the format required by the Reverb API
+ * @param date - The date to format
+ * @returns A string in the format YYYY-MM-DDThh:mm-00:00
+ */
+export function formatDate(date: Date): string {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
@@ -8,11 +19,15 @@ export function formatDate(date) {
   return `${year}-${month}-${day}T${hours}:${minutes}-00:00`;
 }
 
-export function getDateForCurrentQuarter() {
+/**
+ * Gets formatted start and end dates for the current quarter
+ * @returns Object containing start_date, end_date, and queryParams for backward compatibility
+ */
+export function getDateForCurrentQuarter(): DateRange {
   const today = new Date();
   const currentMonth = today.getMonth();
   const currentYear = today.getFullYear();
-  let quarterStartDate, quarterEndDate;
+  let quarterStartDate: Date, quarterEndDate: Date;
 
   if (currentMonth <= 2) {
     quarterStartDate = new Date(currentYear, 0, 1);
@@ -28,12 +43,11 @@ export function getDateForCurrentQuarter() {
     quarterEndDate = new Date(currentYear, 11, 31, 23, 59, 59);
   }
 
-  const startDateString = formatDate(quarterStartDate);
-  const endDateString = formatDate(quarterEndDate);
+  const start_date = formatDate(quarterStartDate);
+  const end_date = formatDate(quarterEndDate);
 
   return {
-    startDate: startDateString,
-    endDate: endDateString,
-    queryParams: `created_start_date=${startDateString}&created_end_date=${endDateString}&per_page=100`
+    start_date,
+    end_date,
   };
 }

@@ -1,6 +1,7 @@
 import express from 'express';
-import { getPayouts } from '../controllers/payoutsController.js';
-import { verifyReverbToken, errorHandler, validateDateParams } from '../middleware/index.js';
+import { getPayouts } from '../controllers/payoutsController.ts';
+import { getOrders } from '../controllers/ordersController.ts';
+import { verifyReverbToken, errorHandler, validateDateParams } from '../middleware/index.ts';
 
 
 
@@ -14,7 +15,7 @@ export function reverbRouter() {
   router.get('/payouts', validateDateParams, getPayouts);
   
   // router.get('/listings', getListings);
-  // router.get('/orders', getOrders);
+  router.get('/orders', getOrders);
   
   return router;
 }
