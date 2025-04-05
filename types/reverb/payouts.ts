@@ -43,7 +43,6 @@ export interface ReverbPayoutsResponse {
   payouts: Payout[];
 }
 
-// Optional line items response if we need to fetch them
 export interface PayoutLineItem {
   amount: CurrencyAmount;
   order_number: string;
