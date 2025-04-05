@@ -1,7 +1,7 @@
 import express from 'express';
-import { getPayouts } from '../controllers/payoutsController.ts';
-import { getOrders } from '../controllers/ordersController.ts';
-import { verifyReverbToken, errorHandler, validateDateParams } from '../middleware/index.ts';
+import { getPayouts } from '../controllers/payoutsController';
+import { getOrders } from '../controllers/ordersController';
+import { verifyReverbToken, errorHandler, validateDateParams } from '../middleware/index';
 
 
 

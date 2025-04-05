@@ -1,8 +1,8 @@
 import { request } from 'undici';
 import { Request, Response, NextFunction } from 'express'
 import { getDateForCurrentQuarter, calculateTotals } from '../utils/index.js';
-import { ReverbPayoutsResponse } from '../types/reverb/payouts.ts'
-import { ApiQueryParams } from '../types/reverb/index.ts';
+import { ReverbPayoutsResponse } from '../types/reverb/payouts'
+import { ApiQueryParams } from '../types/reverb/index';
 
 export async function getPayouts(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {

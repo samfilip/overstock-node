@@ -1,6 +1,6 @@
-import { validateDateParams } from './validators.ts';
-import { verifyReverbToken } from './auth.ts';
-import { errorHandler } from './errorHandler.ts';
+import { validateDateParams } from './validators';
+import { verifyReverbToken } from './auth';
+import { errorHandler } from './errorHandler';
 
 export {
   validateDateParams,

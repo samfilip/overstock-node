@@ -1,5 +1,5 @@
-import { formatDate, getDateForCurrentQuarter } from './dateUtils.js';
-import { formatCurrency, calculateTotals } from './formatters.js';
+import { formatDate, getDateForCurrentQuarter } from './dateUtils';
+import { formatCurrency, calculateTotals } from './formatters';
 
 export {
   formatDate,

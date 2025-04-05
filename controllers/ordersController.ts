@@ -1,8 +1,9 @@
 import { request } from 'undici';
 import { Request, Response, NextFunction } from 'express';
-import { getDateForCurrentQuarter } from '../utils/index.js';
-import { ReverbOrdersResponse, Order } from '../types/reverb/order.js';
-import { ApiQueryParams } from '../types/reverb/index.ts';
+import { getDateForCurrentQuarter } from '../utils/index';
+import { ReverbOrdersResponse } from '../types/reverb/order';
+import { ApiQueryParams } from '../types/reverb/index';
+import { ApiError } from '../types/express/api';
 
 interface DateRange {
   start_date: string;
@@ -44,11 +45,11 @@ export async function getOrders(req: Request, res: Response, next: NextFunction)
     
     if (statusCode !== 200) {
       const errorBody = await body.json().catch(() => null);
-      throw { 
-        statusCode, 
-        message: 'Error fetching data from Reverb API',
-        body: errorBody
-      };
+      const error = new Error('Error fetching data from Reverb API') as ApiError;
+      error.name = 'ReverbAPIError';
+      error.statusCode = statusCode;
+      error.body = errorBody;
+      throw error;
     }
     
     const ordersData: ReverbOrdersResponse = await body.json() as ReverbOrdersResponse;
